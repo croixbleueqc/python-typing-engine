@@ -319,6 +319,9 @@ class Typing2:
         """
         self.loads_from_dict(json.loads(data.decode(encoding=encoding, errors=errors)))
 
+    def __repr__(self):
+        return str(self)
+
     def __str__(self):
         return str(self.dumps())
 

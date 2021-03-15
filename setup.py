@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='typing_engine',
-    version='2.0.0',
+    version='2.1.0',
     python_requires='>=3.5',
     packages=find_packages(exclude=['tests']),
     install_requires=[],
