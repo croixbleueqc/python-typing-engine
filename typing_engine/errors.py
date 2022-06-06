@@ -21,8 +21,10 @@
 class TypingEngineException(Exception):
     pass
 
+
 class UnsupportedOperation(TypingEngineException):
     pass
+
 
 class UnsupportedType(TypingEngineException):
     def __init__(self, obj):

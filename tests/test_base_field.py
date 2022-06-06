@@ -22,6 +22,7 @@ import unittest
 
 from typing_engine.typing import Field, Typing2
 
+
 class BaseFieldTest(unittest.TestCase):
     def test_init(self):
         f = Field()
@@ -34,8 +35,10 @@ class BaseFieldTest(unittest.TestCase):
 
     def test_get(self):
         f = Field(name="NAME")
+
         def func1(instance, value):
             return "OTHER"
+
         f.getters(func1)
 
         instance = Typing2()
@@ -57,8 +60,10 @@ class BaseFieldTest(unittest.TestCase):
 
     def test_set(self):
         f = Field(name="NAME")
+
         def func1(instance, value):
             return value + 10
+
         f.setters(func1)
         f.setters(func1)
 
@@ -94,8 +99,10 @@ class BaseFieldTest(unittest.TestCase):
 
     def test_setters(self):
         f = Field(name="NAME")
+
         def func1(instance, value):
             return value
+
         def func2(instance, value):
             return value
 
@@ -111,8 +118,10 @@ class BaseFieldTest(unittest.TestCase):
 
     def test_getters(self):
         f = Field(name="NAME")
+
         def func1(instance, value):
             return value
+
         def func2(instance, value):
             return value
 
@@ -185,9 +194,9 @@ class BaseFieldTest(unittest.TestCase):
         f = Field(name="NAME")
         f.list_of(inside_instanciator=dict)
 
-        value = f.get_inside_instance({"data" : "DATA"}, None)
+        value = f.get_inside_instance({"data": "DATA"}, None)
         self.assertIsInstance(value, dict)
-        self.assertEqual(value, {"data" : "DATA"})
+        self.assertEqual(value, {"data": "DATA"})
 
         f.list_of()
         value = f.get_inside_instance("data", None)

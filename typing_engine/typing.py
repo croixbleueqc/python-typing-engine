@@ -22,6 +22,7 @@ import threading
 import io, csv, json
 from .errors import UnsupportedOperation
 
+
 class Typing2:
     """Typing class version 2
 
@@ -30,6 +31,7 @@ class Typing2:
     Keyword Arguments:
         data (object): Data input for typing
     """
+
     __init_lock = threading.Lock()
 
     def __init__(self, data=None, parent=None):
@@ -246,7 +248,9 @@ class Typing2:
             if not raw:
                 value = field.dumps_convert(value)
 
-            dump[field.get_name(no_mapping=raw)] = self.__dump(value, raw, field.is_list)
+            dump[field.get_name(no_mapping=raw)] = self.__dump(
+                value, raw, field.is_list
+            )
 
         self.post_dumps(raw, dump)
 
@@ -263,7 +267,9 @@ class Typing2:
         """
         pass
 
-    def dumps_as_csv(self, raw=False, include_header=False, writer=None, dialect="unix"):
+    def dumps_as_csv(
+        self, raw=False, include_header=False, writer=None, dialect="unix"
+    ):
         """Export as a CSV
 
         Keyword Arguments:
@@ -281,7 +287,9 @@ class Typing2:
             writer = io.StringIO()
 
         dump = self.dumps(raw=raw)
-        csv_writer = csv.DictWriter(writer, dump.keys(), dialect=dialect, quoting=csv.QUOTE_NONNUMERIC)
+        csv_writer = csv.DictWriter(
+            writer, dump.keys(), dialect=dialect, quoting=csv.QUOTE_NONNUMERIC
+        )
         if include_header:
             csv_writer.writeheader()
         csv_writer.writerow(dump)
@@ -299,9 +307,7 @@ class Typing2:
         Returns:
             str: the json content
         """
-        return json.dumps(
-            self.dumps(raw=raw)
-        )
+        return json.dumps(self.dumps(raw=raw))
 
     def encode(self, encoding="utf-8", errors="strict"):
         """Encode as bytes
@@ -325,6 +331,7 @@ class Typing2:
     def __str__(self):
         return str(self.dumps())
 
+
 class Field:
     """Field
 
@@ -335,6 +342,7 @@ class Field:
         instanciator (class|function): a class or function that will instanciate an object
         default (object): a default value for the field
     """
+
     def __init__(self, name=None, instanciator=None, default=None):
         # from variables
         self.name = None
@@ -375,7 +383,7 @@ class Field:
 
         # getters
         for func in self.getters_funcs:
-            if (type(func).__name__ == "method"):
+            if type(func).__name__ == "method":
                 # dynamic
                 value = func(value)
             else:
@@ -391,7 +399,7 @@ class Field:
         """
         value = self.loads_convert(value)
         for func in self.setters_funcs:
-            if (type(func).__name__ == "method"):
+            if type(func).__name__ == "method":
                 # dynamic
                 value = func(value)
             else:
@@ -669,6 +677,7 @@ class Field:
 
         return self.dumps_converter(value)
 
+
 class vField(Field):
     """vField is a virtual Field
 
@@ -677,6 +686,7 @@ class vField(Field):
     The purpose of vField is to provide a mechanism to get and set values
     from/for other variables.
     """
+
     def __get__(self, instance, owner):
         """Getter"""
         if instance is None:
@@ -687,7 +697,7 @@ class vField(Field):
 
         # getters
         for func in self.getters_funcs:
-            if (type(func).__name__ == "method"):
+            if type(func).__name__ == "method":
                 # dynamic
                 value = func(value)
             else:
@@ -704,7 +714,7 @@ class vField(Field):
         value = self.loads_convert(value)
 
         for func in self.setters_funcs:
-            if (type(func).__name__ == "method"):
+            if type(func).__name__ == "method":
                 # dynamic
                 value = func(value)
             else:
